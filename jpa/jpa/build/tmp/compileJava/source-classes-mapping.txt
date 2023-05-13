@@ -1,0 +1,12 @@
+hellojpa/Member.java
+ hellojpa.Member
+hellojpa/JpaCreate.java
+ hellojpa.JpaCreate
+hellojpa/JpaDelete.java
+ hellojpa.JpaDelete
+hellojpa/JpaRead.java
+ hellojpa.JpaRead
+hellojpa/JpaJpql.java
+ hellojpa.JpaJpql
+hellojpa/JpaUpdate.java
+ hellojpa.JpaUpdate
