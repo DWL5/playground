@@ -1,2 +1,6 @@
 rootProject.name = 'jpa'
+include 'playground'
+include 'order_practice'
+include 'untitled'
+include 'jap_shop'
 

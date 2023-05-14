@@ -1,4 +1,4 @@
-package hellojpa;
+package hellojpa.persistence;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

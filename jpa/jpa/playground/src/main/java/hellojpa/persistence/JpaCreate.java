@@ -1,11 +1,11 @@
-package hellojpa;
+package hellojpa.persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class JpaUpdate {
+public class JpaCreate {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager();
@@ -14,9 +14,17 @@ public class JpaUpdate {
         tx.begin();
 
         try {
-            Member member = em.find(Member.class, 1L);
-            member.setName("HelloJpa");
+            Member member = new Member();
 
+            /*
+            member.setId(1L);
+            member.setName("HelloA");
+            */
+
+            member.setId(2L);
+            member.setName("HelloB");
+
+            em.persist(member);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
