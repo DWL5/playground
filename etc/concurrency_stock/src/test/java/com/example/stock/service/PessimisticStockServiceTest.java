@@ -15,10 +15,9 @@ import java.util.concurrent.Executors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class StockServiceTest {
-
+class PessimisticStockServiceTest {
     @Autowired
-    private StockService stockService;
+    private PessimisticStockService stockService;
 
     @Autowired
     private StockRepository stockRepository;
@@ -47,7 +46,7 @@ class StockServiceTest {
                 try {
                     stockService.decrease(1L, 1L);
                 } finally {
-                     latch.countDown();
+                    latch.countDown();
                 }
             });
         }

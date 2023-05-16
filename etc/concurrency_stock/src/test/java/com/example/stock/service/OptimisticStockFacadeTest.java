@@ -15,10 +15,9 @@ import java.util.concurrent.Executors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class StockServiceTest {
-
+class OptimisticStockFacadeTest {
     @Autowired
-    private StockService stockService;
+    private OptimisticStockFacade stockService;
 
     @Autowired
     private StockRepository stockRepository;
@@ -27,13 +26,6 @@ class StockServiceTest {
     void setUp() {
         Stock stock = new Stock(1L, 100L);
         stockRepository.saveAndFlush(stock);
-    }
-
-    @Test
-    void 재고감소() {
-        stockService.decrease(1L, 1L);
-        Stock stock = stockRepository.findById(1L).orElseThrow();
-        assertEquals(99, stock.getQuantity());
     }
 
     @Test
@@ -46,8 +38,10 @@ class StockServiceTest {
             executorService.submit(() -> {
                 try {
                     stockService.decrease(1L, 1L);
+                } catch (InterruptedException e) {
+                   throw new RuntimeException();
                 } finally {
-                     latch.countDown();
+                    latch.countDown();
                 }
             });
         }
@@ -61,4 +55,5 @@ class StockServiceTest {
     void tearDown() {
         stockRepository.deleteAll();
     }
+
 }
