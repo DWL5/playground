@@ -1,5 +1,6 @@
-package com.example.stock.service;
+package com.example.stock.facade;
 
+import com.example.stock.service.OptimisticStockService;
 import org.springframework.stereotype.Service;
 
 @Service

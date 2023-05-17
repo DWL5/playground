@@ -1,7 +1,6 @@
-package com.example.stock.service;
+package com.example.stock.facade;
 
 import com.example.stock.domain.Stock;
-import com.example.stock.facade.OptimisticStockFacade;
 import com.example.stock.repository.StockRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +15,9 @@ import java.util.concurrent.Executors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class OptimisticStockFacadeTest {
+class RedissonLockStockFacadeTest {
     @Autowired
-    private OptimisticStockFacade stockService;
+    private RedissonLockStockFacade redissonLockStockFacade;
 
     @Autowired
     private StockRepository stockRepository;
@@ -30,6 +29,13 @@ class OptimisticStockFacadeTest {
     }
 
     @Test
+    void 재고감소() {
+        redissonLockStockFacade.decrease(1L, 1L);
+        Stock stock = stockRepository.findById(1L).orElseThrow();
+        assertEquals(99, stock.getQuantity());
+    }
+
+    @Test
     void 동시에_100개_요청() throws InterruptedException {
         int threadCount = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
@@ -38,9 +44,7 @@ class OptimisticStockFacadeTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    stockService.decrease(1L, 1L);
-                } catch (InterruptedException e) {
-                   throw new RuntimeException();
+                    redissonLockStockFacade.decrease(1L, 1L);
                 } finally {
                     latch.countDown();
                 }
@@ -56,5 +60,6 @@ class OptimisticStockFacadeTest {
     void tearDown() {
         stockRepository.deleteAll();
     }
+
 
 }
