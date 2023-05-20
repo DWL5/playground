@@ -1,3 +1,4 @@
+import domain.Book;
 import domain.Order;
 import domain.OrderItem;
 
@@ -14,13 +15,13 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            Order order = new Order();
-            em.persist(order);
+            Book book = new Book();
+            book.setName("JPA");
+            book.setIsbn("abc");
+            book.setAuthor("김영한");
 
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
+            em.persist(book);
 
-            em.persist(orderItem);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
