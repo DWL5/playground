@@ -1,5 +1,5 @@
 rootProject.name = 'jpa'
 include 'playground'
-include 'table_mapping'
-include 'relation_mapping'
+include 'order'
+include 'team'
 
