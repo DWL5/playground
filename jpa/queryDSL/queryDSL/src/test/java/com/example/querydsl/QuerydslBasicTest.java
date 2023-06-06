@@ -144,4 +144,20 @@ public class QuerydslBasicTest {
         assertThat(teamA.get(team.name)).isEqualTo("teamB");
         assertThat(teamA.get(member.age.avg())).isEqualTo(35);
     }
+
+    /**
+     * 팀 A에 소솓된 모든 회원
+     */
+    @Test
+    public void join() {
+        final List<Member> result = queryFactory
+                .selectFrom(member)
+                .join(member.team, team)
+                .where(team.name.eq("teamA"))
+                .fetch();
+
+        assertThat(result)
+                .extracting("username")
+                .containsExactly("member1", "member2");
+    }
 }
