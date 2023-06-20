@@ -138,5 +138,4 @@ public class StreamTest {
         collect.stream().forEach(System.out::print);
 
     }
-
 }
